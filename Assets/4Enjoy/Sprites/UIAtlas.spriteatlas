@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UIAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 0
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 7357c3f0476a8af4983892648e5be87d, type: 3}
+    - {fileID: 2800000, guid: df8f1e11a6a403e4881a717adfe73e9e, type: 3}
+    - {fileID: 2800000, guid: 578c656f9c5db8c448dc3c7415ea2923, type: 3}
+    - {fileID: 2800000, guid: 03c97305055954740a4c278a59a55e81, type: 3}
+    - {fileID: 2800000, guid: 98812ea791dfc8d4fbd865b1085159a5, type: 3}
+    - {fileID: 2800000, guid: a297131c6975a6542bfb8e7689165b90, type: 3}
+    totalSpriteSurfaceArea: 176000
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 7357c3f0476a8af4983892648e5be87d, type: 3}
+  - {fileID: 21300000, guid: df8f1e11a6a403e4881a717adfe73e9e, type: 3}
+  - {fileID: 21300000, guid: 03c97305055954740a4c278a59a55e81, type: 3}
+  - {fileID: 21300000, guid: 98812ea791dfc8d4fbd865b1085159a5, type: 3}
+  - {fileID: 21300000, guid: a297131c6975a6542bfb8e7689165b90, type: 3}
+  - {fileID: 21300000, guid: 578c656f9c5db8c448dc3c7415ea2923, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - small-pop-background
+  - button-blue-small-back
+  - close-button
+  - gui-lives
+  - life-icon
+  - button-green-small-back
+  m_RenderDataMap: {}
+  m_Tag: UIAtlas
+  m_IsVariant: 0
