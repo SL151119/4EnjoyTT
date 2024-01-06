@@ -14,6 +14,7 @@ public class LivesController : MonoBehaviour
     {
         _livesView.OpenLivesPopupButton.Click += OnOpenLivesPopupButtonClick;
         _livesPopupView.CloseLivesPopupButton.Click += OnCloseLivesPopupButtonClick;
+        _livesPopupView.BackgroundCloseLivesPopupButton.Click += OnCloseLivesPopupButtonClick;
         _livesPopupView.UseLifeButton.Click += OnUseLifeButtonClick;
         _livesPopupView.RefillLivesButton.Click += OnRefillLivesButtonClick;
     }
@@ -22,6 +23,7 @@ public class LivesController : MonoBehaviour
     {
         _livesView.OpenLivesPopupButton.Click -= OnOpenLivesPopupButtonClick;
         _livesPopupView.CloseLivesPopupButton.Click -= OnCloseLivesPopupButtonClick;
+        _livesPopupView.BackgroundCloseLivesPopupButton.Click -= OnCloseLivesPopupButtonClick;
         _livesPopupView.UseLifeButton.Click -= OnUseLifeButtonClick;
         _livesPopupView.RefillLivesButton.Click -= OnRefillLivesButtonClick;
     }
@@ -29,40 +31,42 @@ public class LivesController : MonoBehaviour
     public void Initialize(Lives lives)
     {
         _lives = lives;
+
+        _lives.LivesChanged += UpdateLivesPopupState;
+
+        UpdateLivesPopupState(_lives.CurrentLives);
     }
+
+    private void OnDestroy() =>
+        _lives.LivesChanged -= UpdateLivesPopupState;
 
     private void OnOpenLivesPopupButtonClick()
     {
-        _livesPopupView.PlayShowAnimation();
-        UpdateLivesPopupState();
+        _livesPopupView.TogglePopupVisibility(true);
     }
 
     private void OnCloseLivesPopupButtonClick()
     {
-        UpdateLivesPopupState();
-        _livesPopupView.PlayHideAnimation();
+        _livesPopupView.TogglePopupVisibility(false);
     }
 
     private void OnUseLifeButtonClick()
     {
         _lives.UseLife();
-        UpdateLivesPopupState();
     }
 
     private void OnRefillLivesButtonClick()
     {
         _lives.RefillLives();
-        UpdateLivesPopupState();
     }
 
-    private void UpdateLivesPopupState()
+    private void UpdateLivesPopupState(int lives)
     {
-        int currentLives = _lives.CurrentLives;
         int maxLives = _lives.MaxLives;
 
-        if (currentLives == 0)
+        if (lives == 0)
             _state = LivesPopupState.ZeroLives;
-        else if (currentLives == maxLives)
+        else if (lives == maxLives)
             _state = LivesPopupState.MaxLives;
         else
             _state = LivesPopupState.Default;

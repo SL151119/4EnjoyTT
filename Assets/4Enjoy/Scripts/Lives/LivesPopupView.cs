@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LivesPopupView : MonoBehaviour
 {
@@ -12,14 +13,19 @@ public class LivesPopupView : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _timerPopupValue;
     [SerializeField] private TextMeshProUGUI _livesPopupValue;
+    [SerializeField] private CustomButton _closeLivesPopupButton;
     [SerializeField] private CustomButton _useLifeButton;
     [SerializeField] private CustomButton _refillLivesButton;
-    [SerializeField] private CustomButton _closeLivesPopupButton;
-    [SerializeField] private AnimatorController _animatorController;
+    [SerializeField] private CustomButton _backgroundCloseLivesPopupButton;
+    [SerializeField] private Image _backgroundImage;
+    [SerializeField] private AnimatorController[] _animatorControllers;
     
     public CustomButton UseLifeButton => _useLifeButton;
     public CustomButton RefillLivesButton => _refillLivesButton;
     public CustomButton CloseLivesPopupButton => _closeLivesPopupButton;
+    public CustomButton BackgroundCloseLivesPopupButton => _backgroundCloseLivesPopupButton;
+
+    private bool _currentPopupStatus;
 
     private Lives _lives;
 
@@ -38,14 +44,29 @@ public class LivesPopupView : MonoBehaviour
     private void OnDestroy() => 
         _lives.LivesChanged -= UpdateLivesValue;
 
-    public void PlayShowAnimation()
-    {
-        _animatorController.PlayAnimation(AnimatorController.AnimatorState.Show);
-    }
 
-    public void PlayHideAnimation()
+    public void TogglePopupVisibility(bool shouldBeVisible)
     {
-        _animatorController.PlayAnimation(AnimatorController.AnimatorState.Hide);
+        if (shouldBeVisible == _currentPopupStatus) 
+            return;
+
+        if (shouldBeVisible)
+            foreach (AnimatorController animController in _animatorControllers)
+                animController.PlayAnimation(AnimatorController.AnimatorState.Show);
+        else
+            foreach (AnimatorController animController in _animatorControllers)
+                animController.PlayAnimation(AnimatorController.AnimatorState.Hide);
+                    
+        bool isActive = shouldBeVisible;
+        float clipLength = 0.75f; //It's not quite right, but I tried to find solution via info.clip.length
+
+        this.UniversalWait(clipLength, () =>
+            {
+                _backgroundCloseLivesPopupButton.ChangeButtonInteractableState(isActive);
+                _backgroundImage.raycastTarget = isActive;
+
+                _currentPopupStatus = shouldBeVisible;
+            });
     }
 
     public void ChangeState(LivesPopupState state)

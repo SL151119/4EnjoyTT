@@ -79,6 +79,8 @@ public class Lives
     {
         LivesChanged?.Invoke(CurrentLives);
 
+        _dataProvider.Save();
+
         if (!_isRestoring)
         {
             _persistentData.GameData.TimeToGainNextLife = DateTime.Now.AddSeconds(_livesGainIntervalInSeconds);

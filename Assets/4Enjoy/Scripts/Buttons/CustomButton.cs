@@ -12,6 +12,11 @@ public class CustomButton : MonoBehaviour
 
     private void OnDisable() => _button.Remove(OnButtonClick);
 
+    public void ChangeButtonInteractableState(bool isActive)
+    {
+        _button.interactable = isActive;
+    }
+
     private void OnButtonClick()
     {
         Click?.Invoke();
