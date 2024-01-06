@@ -3,6 +3,8 @@ using UnityEngine;
 public class Bootstrap : MonoBehaviour
 {
     [SerializeField] private LivesView _livesView;
+    [SerializeField] private LivesPopupView _livesPopupView;
+    [SerializeField] private LivesController _livesController;
 
     private IDataProvider _dataProvider;
     private IPersistentData _persistentData;
@@ -26,9 +28,15 @@ public class Bootstrap : MonoBehaviour
 
     private void InitializeLives()
     {
-        _lives = new Lives(_persistentData);
+        _lives = new Lives(_persistentData, _dataProvider);
 
         _livesView.Initialize(_lives);
+
+        _livesPopupView.Initialize(_lives);
+  
+        _livesController.Initialize(_lives);
+
+        _lives.StartGame();
     }
 
     private void LoadDataOrInit()

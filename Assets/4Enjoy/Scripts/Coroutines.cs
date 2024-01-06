@@ -1,0 +1,28 @@
+using System.Collections;
+using UnityEngine;
+
+public sealed class Coroutines : MonoBehaviour
+{
+    private static Coroutines Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                var go = new GameObject("CoroutineRunner");
+                _instance = go.AddComponent<Coroutines>();
+                DontDestroyOnLoad(go);
+            }
+
+            return _instance;
+        }
+    }
+
+    private static Coroutines _instance;
+
+    public static Coroutine StartRoutine(IEnumerator enumerator)
+        => Instance.StartCoroutine(enumerator);
+
+    public static void StopRoutine(Coroutine routine)
+        => Instance.StopCoroutine(routine);
+}

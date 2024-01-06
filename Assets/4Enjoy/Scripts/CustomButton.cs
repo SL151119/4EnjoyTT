@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LivesPopupButton : MonoBehaviour
+public class CustomButton : MonoBehaviour
 {
     public event Action Click;
 

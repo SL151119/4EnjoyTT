@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class DataLocalProvider : IDataProvider
 {
-    private const string FileName = "PlayerSave";
-    private const string SaveFileExtension = ".json";
-
-    private IPersistentData _persistentData;
+    private readonly IPersistentData _persistentData;
 
     public DataLocalProvider(IPersistentData persistentData) => _persistentData = persistentData;
 
     private string SavePath => Application.persistentDataPath;
 
-    private string FullPath => Path.Combine(SavePath, $"{FileName}{SaveFileExtension}");
+    private string FullPath => Path.Combine(SavePath, $"{ConstantsExtension.FILE_NAME}{ConstantsExtension.SAVE_FILE_EXTENSION}");
 
     public bool TryLoad()
     {
