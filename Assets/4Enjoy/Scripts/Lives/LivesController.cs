@@ -45,7 +45,7 @@ public class LivesController : MonoBehaviour
 
     private void OnUseLifeButtonClick()
     {
-        _lives.UseLives();
+        _lives.UseLife();
         UpdateLivesPopupState();
     }
 
@@ -57,7 +57,7 @@ public class LivesController : MonoBehaviour
 
     private void UpdateLivesPopupState()
     {
-        int currentLives = _lives.GetCurrentLives();
+        int currentLives = _lives.CurrentLives;
         int maxLives = _lives.MaxLives;
 
         if (currentLives == 0)

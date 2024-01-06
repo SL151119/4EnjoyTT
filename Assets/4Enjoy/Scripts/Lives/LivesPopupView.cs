@@ -29,7 +29,7 @@ public class LivesPopupView : MonoBehaviour
     {
         _lives = lives;
 
-        UpdateLivesValue(_lives.GetCurrentLives());
+        UpdateLivesValue(_lives.CurrentLives);
 
         _lives.TimerValueChanged += UpdateTimerValue;
         _lives.LivesChanged += UpdateLivesValue;

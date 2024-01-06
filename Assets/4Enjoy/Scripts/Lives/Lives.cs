@@ -15,7 +15,20 @@ public class Lives
     private readonly IDataProvider _dataProvider;
 
     public int MaxLives => _livesMax;
-    private bool IsLivesFull => _persistentData.GameData.Lives == _livesMax;
+    public int CurrentLives
+    {
+        get
+        {
+            return _persistentData.GameData.Lives;
+        }
+
+        private set
+        {
+            _persistentData.GameData.Lives = value;
+        }
+    }
+    private bool IsLivesFull => CurrentLives == _livesMax;
+
     private bool _isRestoring = false;
 
     private Coroutine _restoreLivesCoroutine;
@@ -28,17 +41,14 @@ public class Lives
 
     public void StartGame()
     {
-        if (_restoreLivesCoroutine != null) Coroutines.StopRoutine(_restoreLivesCoroutine);
-        _restoreLivesCoroutine = Coroutines.StartRoutine(RestoreLives());
+        StartRestoreLivesCoroutine();
     }
 
     public void RefillLives()
     {
-        _persistentData.GameData.Lives = _livesMax;
+        CurrentLives = _livesMax;
 
-        LivesChanged?.Invoke(_persistentData.GameData.Lives);
-
-        StartRestoreLives();
+        UpdateLivesCount();
 
         UpdateTimer();
 
@@ -47,42 +57,40 @@ public class Lives
         _isRestoring = false;
     }
 
-    public int GetCurrentLives() 
-        => _persistentData.GameData.Lives;
+    public void UseLife()
+    {
+        if (CurrentLives < 1)
+            throw new ArgumentOutOfRangeException();
+
+        CurrentLives -= _livesToAdd;
+        UpdateLivesCount();   
+    }
 
     private void AddLife()
     {
         if (IsLivesFull)
             throw new ArgumentOutOfRangeException();
 
-        _persistentData.GameData.Lives += _livesToAdd;
-
-        LivesChanged?.Invoke(_persistentData.GameData.Lives);
-
-        StartRestoreLives();
+        CurrentLives += _livesToAdd;
+        UpdateLivesCount();
     }
 
-    private void StartRestoreLives()
+    private void UpdateLivesCount()
     {
+        LivesChanged?.Invoke(CurrentLives);
+
         if (!_isRestoring)
         {
-            _persistentData.GameData.LastGainLifeTime = DateTime.Now.AddSeconds(_livesGainIntervalInSeconds);
+            _persistentData.GameData.TimeToGainNextLife = DateTime.Now.AddSeconds(_livesGainIntervalInSeconds);
 
-            if (_restoreLivesCoroutine != null) Coroutines.StopRoutine(_restoreLivesCoroutine);
-            _restoreLivesCoroutine = Coroutines.StartRoutine(RestoreLives());
+            StartRestoreLivesCoroutine();
         }
     }
-
-    public void UseLives()
+    
+    private void StartRestoreLivesCoroutine()
     {
-        if (_persistentData.GameData.Lives < 1)
-            throw new ArgumentOutOfRangeException();
-
-        _persistentData.GameData.Lives -= _livesToAdd;
-
-        LivesChanged?.Invoke(_persistentData.GameData.Lives);
-
-        StartRestoreLives();
+        if (_restoreLivesCoroutine != null) Coroutines.StopRoutine(_restoreLivesCoroutine);
+        _restoreLivesCoroutine = Coroutines.StartRoutine(RestoreLives());
     }
 
     private void UpdateTimer()
@@ -108,15 +116,13 @@ public class Lives
 
         while (!IsLivesFull)
         {
-            Debug.Log("Im running");
             DateTime currentDateTime = DateTime.Now;
             DateTime timeToGainNextLife = _persistentData.GameData.TimeToGainNextLife;
+
             addingLivesInProgress = false;
 
             while (currentDateTime > timeToGainNextLife)
             {
-                Debug.Log("Im running 1");
-
                 addingLivesInProgress = true;
 
                 AddLife();
