@@ -240,7 +240,7 @@ PlayerSettings:
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
   AndroidKeystoreName: "C:/Users/invok/OneDrive/\u0420\u0430\u0431\u043E\u0447\u0438\u0439
-    \u0441\u0442\u043E\u043B/4Enjoy APK/user.keystore"
+    \u0441\u0442\u043E\u043B/TestTask Serhii Bilokamenskyi/4Enjoy APK and Keystore/user.keystore"
   AndroidKeyaliasName: livesgame
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
