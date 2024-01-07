@@ -1,12 +1,11 @@
 using UnityEngine;
-using static LivesPopupView;
 
 public class LivesController : MonoBehaviour
 {
     [SerializeField] private LivesView _livesView;
     [SerializeField] private LivesPopupView _livesPopupView;
 
-    private LivesPopupState _state;
+    private LivesPopupView.LivesPopupState _state;
 
     private Lives _lives;
 
@@ -32,9 +31,9 @@ public class LivesController : MonoBehaviour
     {
         _lives = lives;
 
-        _lives.LivesChanged += UpdateLivesPopupState;
-
         UpdateLivesPopupState(_lives.CurrentLives);
+
+        _lives.LivesChanged += UpdateLivesPopupState;
     }
 
     private void OnDestroy() =>
@@ -65,11 +64,11 @@ public class LivesController : MonoBehaviour
         int maxLives = _lives.MaxLives;
 
         if (lives == 0)
-            _state = LivesPopupState.ZeroLives;
+            _state = LivesPopupView.LivesPopupState.ZeroLives;
         else if (lives == maxLives)
-            _state = LivesPopupState.MaxLives;
+            _state = LivesPopupView.LivesPopupState.MaxLives;
         else
-            _state = LivesPopupState.Default;
+            _state = LivesPopupView.LivesPopupState.Default;
 
         _livesPopupView.ChangeState(_state);
     }

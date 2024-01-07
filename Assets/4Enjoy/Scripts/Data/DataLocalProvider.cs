@@ -8,9 +8,11 @@ public class DataLocalProvider : IDataProvider
 
     public DataLocalProvider(IPersistentData persistentData) => _persistentData = persistentData;
 
-    private string SavePath => Application.persistentDataPath;
+    private string SavePath 
+        => Application.persistentDataPath;
 
-    private string FullPath => Path.Combine(SavePath, $"{ConstantsExtension.FILE_NAME}{ConstantsExtension.SAVE_FILE_EXTENSION}");
+    private string FullPath 
+        => Path.Combine(SavePath, $"{ConstantsExtension.FILE_NAME}{ConstantsExtension.SAVE_FILE_EXTENSION}");
 
     public bool TryLoad()
     {
@@ -29,5 +31,6 @@ public class DataLocalProvider : IDataProvider
         }));
     }
 
-    private bool IsDataAlreadyExist() => File.Exists(FullPath);
+    private bool IsDataAlreadyExist() 
+        => File.Exists(FullPath);
 }

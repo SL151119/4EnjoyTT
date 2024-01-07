@@ -8,9 +8,11 @@ public class CustomButton : MonoBehaviour
 
     [SerializeField] private Button _button;
 
-    private void OnEnable() => _button.Add(OnButtonClick);
+    private void OnEnable() 
+        => _button.Add(OnButtonClick);
 
-    private void OnDisable() => _button.Remove(OnButtonClick);
+    private void OnDisable() 
+        => _button.Remove(OnButtonClick);
 
     public void ChangeButtonInteractableState(bool isActive)
     {

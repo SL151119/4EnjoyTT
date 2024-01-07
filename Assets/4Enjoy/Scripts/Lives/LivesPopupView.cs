@@ -44,7 +44,6 @@ public class LivesPopupView : MonoBehaviour
     private void OnDestroy() => 
         _lives.LivesChanged -= UpdateLivesValue;
 
-
     public void TogglePopupVisibility(bool shouldBeVisible)
     {
         if (shouldBeVisible == _currentPopupStatus) 

@@ -35,7 +35,7 @@ float3 GetSurfaceNormal(float4 h, float bias)
 	h /= bevelWidth;
 	h = saturate(h+.5);
 
-	if(raisedBevel) h = 1 - abs(h*2.0 - 1.0);
+	if (raisedBevel) h = 1 - abs(h*2.0 - 1.0);
 	h = lerp(h, sin(h*3.141592/2.0), _BevelRoundness);
 	h = min(h, 1.0-_BevelClamp);
 	h *= _Bevel * bevelWidth * _GradientScale * -2.0;
