@@ -8,6 +8,7 @@
 * text=auto
 
 # Code
+*.cs text diff=csharp
 *.cs linguist-language=C#
 
 # Unity Text Assets
